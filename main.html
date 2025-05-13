@@ -1,8 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <script type="text/javascript" src="./script.js">
-</script>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharable URLs</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h3 {
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+            margin: 0 auto;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #url {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="form-container">
+        <h2>Sharable URL Generator</h2>
+        <form id="form">
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <input type="number" id="year" name="year" placeholder="Enter your year" required>
+            <button type="submit" id="button">Generate URL</button>
+        </form>
+
+        <h3 id="url">https://localhost:8080/</h3>
+    </div>
+
+    <script>
+        // Get references to the elements
+        const form = document.getElementById('form');
+        const nameInput = document.getElementById('name');
+        const yearInput = document.getElementById('year');
+        const urlDisplay = document.getElementById('url');
+
+        // When the form is submitted
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the form from refreshing the page
+
+            // Get the values of the inputs
+            const name = nameInput.value.trim();
+            const year = yearInput.value.trim();
+
+            // Build the query string
+            let queryString = "https://localhost:8080/";
+
+            if (name) {
+                queryString += `?name=${encodeURIComponent(name)}`;
+            }
+
+            if (year) {
+                // If there was already a query string, we append with '&'
+                if (queryString.includes('?')) {
+                    queryString += `&year=${encodeURIComponent(year)}`;
+                } else {
+                    queryString += `?year=${encodeURIComponent(year)}`;
+                }
+            }
+
+            // Update the URL in the h3 tag
+            urlDisplay.textContent = queryString;
+        });
+    </script>
+
+</body>
 </html>
+
